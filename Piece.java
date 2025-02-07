@@ -59,7 +59,21 @@ public class Piece {
 		preRow = getRow(x);
 	}
 
+	public void resetPosition() {
+		col = preCol;
+		row = preRow;
+		x = getX(col);
+		y = getY(row);
+	}
+
 	public boolean canMove(int targetCol, int targetRow) {
+		return false;
+	}
+
+	public boolean isWithinBoard(int targetCol, int targetRow) {
+		if(targetCol >= 0 && targetCol <=7 && targetRow >= 0 && targetRow <= 7) {
+			return true;
+		}
 		return false;
 	}
 
