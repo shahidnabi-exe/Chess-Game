@@ -137,7 +137,9 @@ public class GamePanel extends JPanel implements Runnable {
 		if(m.pressed) {
 			if(activeP == null) {
 				// if the active piece is null, check if you can pick up a piece
+
 				for(Piece piece : simPieces) {
+
 					// if the mouse is on an ally piece, pick it up as the activeP
 					if(piece.color == currentColor  && 
 							piece.col == m.x / Board.SQUARE_SIZE &&
@@ -154,11 +156,20 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// MOUSE BUTTON PREESSED //
 		if(m.pressed == false) {
+
 			if (activeP != null) {
+
 				if(validSquare ){
+
+					// MOVE CONFIRMED
+
+					//Update the piece list in case a piece has been captured and removed during the simulation
+					copyPieces(simPieces, pieces);
 					activeP.updatePosition();
 				}
 				else {
+					// the move is not valid so reset everything 
+					copyPieces(pieces, simPieces);
 					activeP.resetPosition();
 					activeP = null;
 				}
@@ -174,6 +185,10 @@ public class GamePanel extends JPanel implements Runnable {
 		 canMove = false;
 		 validSquare = false;
 
+		 // Reset the piece list in every loop 
+		 // this is basically for restoring the removed pieces dring simulation
+		 copyPieces(simPieces, pieces);
+
 		// if the piece is being held, update it position 
 		activeP.x = m.x - Board.HALF_SQUARE_SIZE;
 		activeP.y = m.y - Board.HALF_SQUARE_SIZE;
@@ -184,6 +199,11 @@ public class GamePanel extends JPanel implements Runnable {
 		if(activeP.canMove(activeP.col, activeP.row)) {
 			
 			canMove = true;
+
+			//if hitting a piece, remove it from the list 
+			if(activeP.hittingP != null) {
+				simPieces.remove(activeP.hittingP.getIndex());
+			}
 			validSquare = true;
 		}
 	}
