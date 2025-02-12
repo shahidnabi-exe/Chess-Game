@@ -88,6 +88,14 @@ public class Piece {
 		return false;
 	}
 
+	public boolean isSameSquare(int targetCol, int targetRow) {
+
+		if(targetCol == preCol && targetRow == preRow) {
+			return true;
+		}
+		return false;
+	}
+
 	public Piece getHitting(int targetCol, int targetRow) {
 		for (Piece piece : GamePanel.simPieces) {
 			if(piece.col == targetCol && piece.row == targetRow && piece != this) {
@@ -111,6 +119,57 @@ public class Piece {
 				hittingP = null;
 			}
 		}
+		return false;
+	}
+
+	public boolean pieceIsOnStraightLine(int targetCol, int targetRow) {
+
+		// When piece is moving on to the left 
+		for(int c = preCol + 1; c < targetCol; c++){
+			for (Piece piece : GamePanel.simPieces ) {
+				if(piece.col == c && piece.row == targetRow ) {
+					hittingP = true;
+					return true;
+				}
+				
+			}
+		}
+
+		// When piece is moving on to the moving up 
+		for(int r = preRow - 1; r > targetRow; r--){
+			for (Piece piece : GamePanel.simPieces ) {
+				if(piece.col == r && piece.row == targetRow ) {
+					hittingP = true;
+					return true;
+				}
+				
+			}
+		}
+
+		// When piece is moving on to the moving down 
+		for(int r = preCol + 1; r < targetCol; r++){
+			for (Piece piece : GamePanel.simPieces ) {
+				if(piece.col == r && piece.row == targetRow ) {
+					hittingP = true;
+					return true;
+				}
+				
+			}
+		}
+
+		// When piece is moving on to the left 
+		for(int c = preRow - 1; c > targetCol; c--){
+			for (Piece piece : GamePanel.simPieces ) {
+				if(piece.col == c && piece.row == targetRow ) {
+					hittingP = true;
+					return true;
+				}
+				
+			}
+		}
+
+
+
 		return false;
 	}
 
