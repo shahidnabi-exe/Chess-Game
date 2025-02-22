@@ -24,7 +24,9 @@ public class Queen extends Piece {
 					return true;
 				}
 			}
-			if(Math.abs(targetCol - preRow) == Math.abs(targetRow - preRow))  {
+
+			// Diagnol 
+			if(Math.abs(targetCol - preCol) == Math.abs(targetRow - preRow))  {
 				if(isValidSquare(targetCol, targetRow) && pieceIsOnDiagonalLine(targetCol, targetRow) == false) {
 					return true;
 				}
