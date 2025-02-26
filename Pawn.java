@@ -44,7 +44,17 @@ public class Pawn extends Piece {
 				return true;
 			}
 
+			// Diagonal movement & Capture (if a piece is on a square diagonally in front of it )
+			if (Math.abs(targetCol - preCol) == 1 && targetRow == preRow + moveValue && hittingP != null && 
+    				hittingP.color != color) {
+				
+    			col = targetCol;  // Move pawn to the captured piece's position
+    			row = targetRow;
+    			return true;
+			}
+	
 		}
+
 		return false;
 	}
 

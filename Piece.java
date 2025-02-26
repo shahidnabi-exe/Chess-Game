@@ -65,12 +65,14 @@ public class Piece {
 	}
 
 	public void updatePosition() {
-		x = getX(col);
-		y = getY(row);
-		preCol = getCol(x);
-		preRow = getRow(x);
-		moved = true;
+	    preCol = col;  // Save previous column first
+	    preRow = row;  // Save previous row first
+	    x = getX(col); // Update X position
+	    y = getY(row); // Update Y position
+	    moved = true;
 	}
+
+
 
 	public void resetPosition() {
 		col = preCol;
