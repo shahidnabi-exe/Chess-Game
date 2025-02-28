@@ -206,23 +206,25 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 
 			validSquare = true;
-
-			 // Switch turn to the other player
-			changePlayer();
+			
 		}	
+
 	}
 
 
 	private void changePlayer() {
+	    if (currentColor == WHITE) {
+	        currentColor = BLACK;
+	    } else {
+	        currentColor = WHITE;
+	    }
+	    
+	    // Reset active piece to ensure the new player can pick a piece
+	    activeP = null;
+	    canMove = false;
+	    validSquare = false;
+}
 
-		if(currentColor == WHITE) {
-			currentColor = BLACK;
-		}
-		else {
-			currentColor = WHITE;
-		}
-		activeP = null;
-	}
 
 	public void paintComponent( Graphics g){
 		super.paintComponent(g);
