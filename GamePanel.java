@@ -7,13 +7,9 @@ import javax.swing.JPanel;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.awt.AlphaComposite;
-// import piece.Piece;
-// import piece.Pawn;
-// import piece.Rook;
-// import piece.Knight;
-// import piece.Bishop;
-// import piece.Queen;
-// import piece.King;
+import java.awt.Font;
+import java.awt.RenderingHints;
+
 
 
 
@@ -166,6 +162,8 @@ public class GamePanel extends JPanel implements Runnable {
 					//Update the piece list in case a piece has been captured and removed during the simulation
 					copyPieces(simPieces, pieces);
 					activeP.updatePosition();
+
+					changePlayer();
 				}
 				else {
 					// the move is not valid so reset everything 
@@ -197,15 +195,33 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// check if the piece is hovering over a reachable square
 		if(activeP.canMove(activeP.col, activeP.row)) {
-			
-			canMove = true;
+    		canMove = true;
 
-			//if hitting a piece, remove it from the list 
+			// If hitting a piece, remove it from the list 
 			if(activeP.hittingP != null) {
-				simPieces.remove(activeP.hittingP.getIndex());
+			    simPieces.remove(activeP.hittingP.getIndex());
+
+			        // Update the active piece's position after capturing
+			        activeP.updatePosition();
 			}
+
 			validSquare = true;
+
+			 // Switch turn to the other player
+			changePlayer();
+		}	
+	}
+
+
+	private void changePlayer() {
+
+		if(currentColor == WHITE) {
+			currentColor = BLACK;
 		}
+		else {
+			currentColor = WHITE;
+		}
+		activeP = null;
 	}
 
 	public void paintComponent( Graphics g){
@@ -236,5 +252,16 @@ public class GamePanel extends JPanel implements Runnable {
 			activeP.draw(g2);
 		}
 
+		//STATUS MESSAGES
+		g2.setRenderingHint (RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g2.setFont(new Font ("Book Antiqua", Font.PLAIN, 40));	
+		g2.setColor(Color.white);
+
+		if(currentColor == WHITE) {
+			g2.drawString("White's turn ", 840, 550);
+		}
+		else {
+			g2.drawString(" Black's turn ", 840, 250);
+		}
 	}
 }

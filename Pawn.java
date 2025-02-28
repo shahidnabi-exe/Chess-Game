@@ -14,7 +14,7 @@ public class Pawn extends Piece {
 		 else {
 			image = getImage("bp");
 		}
-
+ 	
 	}
 
 	public boolean canMove(int targetCol, int targetRow) {
@@ -48,8 +48,8 @@ public class Pawn extends Piece {
 			if (Math.abs(targetCol - preCol) == 1 && targetRow == preRow + moveValue && hittingP != null && 
     				hittingP.color != color) {
 				
-    			col = targetCol;  // Move pawn to the captured piece's position
-    			row = targetRow;
+    			// col = targetCol;  // Move pawn to the captured piece's position
+    			// row = targetRow;
     			return true;
 			}
 	
