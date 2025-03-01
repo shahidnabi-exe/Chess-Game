@@ -1,5 +1,3 @@
-// package main;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,8 +7,6 @@ import java.util.ArrayList;
 import java.awt.AlphaComposite;
 import java.awt.Font;
 import java.awt.RenderingHints;
-
-
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -211,20 +207,16 @@ public class GamePanel extends JPanel implements Runnable {
 
 	}
 
-
 	private void changePlayer() {
-	    if (currentColor == WHITE) {
-	        currentColor = BLACK;
-	    } else {
-	        currentColor = WHITE;
-	    }
-	    
-	    // Reset active piece to ensure the new player can pick a piece
-	    activeP = null;
-	    canMove = false;
-	    validSquare = false;
-}
 
+		if(currentColor == WHITE) {
+			currentColor = BLACK;
+		}
+		else {
+			currentColor = WHITE;
+		}
+		activeP = null;
+	}
 
 	public void paintComponent( Graphics g){
 		super.paintComponent(g);
