@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
 	//PIECES
 	public static ArrayList<Piece> pieces = new ArrayList<>();
 	public static ArrayList<Piece> simPieces = new ArrayList<>();
+	ArrayList<Piece>promoPieces = new ArrayList<>();
 	Piece activeP;
 
 	//COLOR
@@ -32,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// BOOLEANS 
 	boolean canMove;
 	boolean validSquare;
-
+	boolean promotion;
 	
 
 	public GamePanel() {
@@ -216,6 +217,15 @@ public class GamePanel extends JPanel implements Runnable {
 			currentColor = WHITE;
 		}
 		activeP = null;
+	}
+
+	private boolean canPromote() {
+
+		if(activeP.type == Type.PAWN) {
+			
+		}
+
+		return false;
 	}
 
 	public void paintComponent( Graphics g){
