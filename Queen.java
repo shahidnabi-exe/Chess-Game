@@ -1,6 +1,3 @@
-// package piece;	
-
-// import main.GamePanel;
 
 public class Queen extends Piece {
 		

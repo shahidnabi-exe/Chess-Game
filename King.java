@@ -1,5 +1,4 @@
-// package piece;	
-// import main.GamePanel;
+
 
 public class King extends Piece {
 		

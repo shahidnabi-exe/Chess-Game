@@ -1,5 +1,3 @@
-// package piece;	
-// import main.GamePanel;
 
 
 public class Rook extends Piece {

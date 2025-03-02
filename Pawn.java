@@ -1,7 +1,3 @@
-// package piece;
-// import main.GamePanel;
-
-
 
 public class Pawn extends Piece {
 	
