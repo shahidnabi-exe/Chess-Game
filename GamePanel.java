@@ -41,13 +41,19 @@ public class GamePanel extends JPanel implements Runnable {
 		setBackground(Color.black);
 		addMouseMotionListener(m);
 		addMouseListener(m);
+
+		// setPieces();
+		testPromotion();
+		copyPieces(pieces, simPieces);
+
 	}
 
 	public void launchGame() {
 		gameThread = new  Thread(this);
 		gameThread.start();
-		setPieces();
-		copyPieces(pieces, simPieces);
+		testPromotion();
+		// setPieces();
+		// copyPieces(pieces, simPieces);
 
 	}
 
@@ -69,8 +75,8 @@ public class GamePanel extends JPanel implements Runnable {
 		pieces.add(new Bishop(WHITE, 2, 7));
 		pieces.add(new Bishop(WHITE, 5, 7));
 		pieces.add(new Queen(WHITE, 3, 7));
-		// pieces.add(new King(WHITE, 4, 7));
 		pieces.add(new King(WHITE, 4, 4));
+				// pieces.add(new King(WHITE, 4, 7));
 
 		// BLACK TEAM
 		pieces.add(new Pawn(BLACK, 0, 1));
@@ -90,6 +96,11 @@ public class GamePanel extends JPanel implements Runnable {
 		pieces.add(new Queen(BLACK, 3, 0));
 		pieces.add(new King(BLACK, 4, 0));
 
+	}
+
+	public void testPromotion() {
+		pieces.add(new Pawn(WHITE, 0, 5));
+		pieces.add(new Pawn(BLACK, 6, 1));
 	}
 
 	private void copyPieces(ArrayList<Piece> source, ArrayList<Piece> target) {
@@ -235,7 +246,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private boolean canPromote() {
 
 		if(activeP.type == Type.PAWN) {
-			if(currentColor == WHITE && activeP.row == 0 || currentColor == BLACK && activeP.row == 7) {
+			if(currentColor == WHITE && activeP.row == 0 || currentColor == BLACK && activeP.row == 7 ) {
 				promoPieces.clear();
 				promoPieces.add(new Rook(currentColor, 9, 2));
 				promoPieces.add(new Knight(currentColor, 9, 3));
@@ -285,11 +296,22 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.setFont(new Font ("Book Antiqua", Font.PLAIN, 40));	
 		g2.setColor(Color.white);
 
-		if(currentColor == WHITE) {
-			g2.drawString("White's turn ", 840, 550);
+		if (promotion) {
+			g2.drawString(" Promoto to:", 840, 150);
+			for(Piece p : promoPieces ) {
+				g2.drawImage(p.image, p.getX(p.col), p.getY(p.row) , Board.SQUARE_SIZE, Board.SQUARE_SIZE, null);
+			}
 		}
 		else {
-			g2.drawString(" Black's turn ", 840, 250);
+			if(currentColor == WHITE) {
+				g2.drawString("White's turn ", 840, 550);
+			}
+			else {
+				g2.drawString(" Black's turn ", 840, 250);
+			}
 		}
+
+
+		
 	}
 }

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 
 public class Piece {
 
+	public Type type;
 	public BufferedImage image;
 	public int x, y;
 	public int col, row, preCol, preRow;
@@ -16,6 +17,7 @@ public class Piece {
 
 	public Piece(int color, int col, int row) {
 		this.color = color;
+		// this.type = type;
 		this.row = row; 
 		this.col = col;
 		x = getX(col);
