@@ -261,6 +261,24 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void promoting() {
 		
+		if(m.pressed) {
+			for(Piece p : promoPieces) {
+				if(p.col == m.x / Board.SQUARE_SIZE && p.row == m.y /Board.SQUARE_SIZE) {
+					switch (p.type) {
+						case ROOK: simPieces.add(new Rook(currentColor, activeP.col, activeP.row));break;
+						case KNIGHT: simPieces.add(new Knight(currentColor, activeP.col, activeP.row));break;
+						case BISHOP: simPieces.add(new Bishop(currentColor, activeP.col, activeP.row));break;
+						case QUEEN: simPieces.add(new Queen(currentColor, activeP.col, activeP.row));break;
+						default: break;
+					}
+					simPieces.remove(activeP.getIndex());
+					copyPieces(simPieces, pieces);
+					activeP = null;
+					promotion = false;
+					changePlayer();
+				}
+			}
+		}
 	}
 
 	public void paintComponent( Graphics g){
