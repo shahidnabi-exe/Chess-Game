@@ -126,52 +126,65 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private void update() {
 
-		/// Mouse Pressed ///
-		if(m.pressed) {
-			if(activeP == null) {
-				// if the active piece is null, check if you can pick up a piece
+		if (promotion) {
+			promoting();
+			
+		}
+		else{
+			/// Mouse Pressed ///
+			if(m.pressed) {
+				if(activeP == null) {
+					// if the active piece is null, check if you can pick up a piece
 
-				for(Piece piece : simPieces) {
+					for(Piece piece : simPieces) {
 
-					// if the mouse is on an ally piece, pick it up as the activeP
-					if(piece.color == currentColor  && 
-							piece.col == m.x / Board.SQUARE_SIZE &&
-							piece.row == m.y / Board.SQUARE_SIZE) {
-						activeP = piece;
+						// if the mouse is on an ally piece, pick it up as the activeP
+						if(piece.color == currentColor  && 
+								piece.col == m.x / Board.SQUARE_SIZE &&
+								piece.row == m.y / Board.SQUARE_SIZE) {
+							activeP = piece;
+						}
 					}
 				}
-			}
-			else {
-				// if the plyr is holding a piece, simulate the piece 
-				simulate();
-			}		
-		}
-
-		// MOUSE BUTTON PREESSED //
-		if(m.pressed == false) {
-
-			if (activeP != null) {
-
-				if(validSquare ){
-
-					// MOVE CONFIRMED
-
-					//Update the piece list in case a piece has been captured and removed during the simulation
-					copyPieces(simPieces, pieces);
-					activeP.updatePosition();
-
-					changePlayer();
-				}
 				else {
-					// the move is not valid so reset everything 
-					copyPieces(pieces, simPieces);
-					activeP.resetPosition();
-					activeP = null;
-				}
-				// activeP.updatePosition();
-				// activeP = null;
+					// if the plyr is holding a piece, simulate the piece 
+					simulate();
+				}		
 			}
-		}
+
+			// MOUSE BUTTON PREESSED //
+			if(m.pressed == false) {
+
+				if (activeP != null) {
+
+					if(validSquare ){
+
+						// MOVE CONFIRMED
+
+						//Update the piece list in case a piece has been captured and removed during the simulation
+						copyPieces(simPieces, pieces);
+						activeP.updatePosition();
+
+						if(canPromote() ) {
+							promotion = true;
+						} else  {
+							changePlayer();
+						}
+
+					}
+					else {
+						// the move is not valid so reset everything 
+						copyPieces(pieces, simPieces);
+						activeP.resetPosition();
+						activeP = null;
+					}
+					// activeP.updatePosition();
+					// activeP = null;
+				}
+			}
+		}	
+
+		
 	}
 
 
@@ -222,10 +235,21 @@ public class GamePanel extends JPanel implements Runnable {
 	private boolean canPromote() {
 
 		if(activeP.type == Type.PAWN) {
-			
+			if(currentColor == WHITE && activeP.row == 0 || currentColor == BLACK && activeP.row == 7) {
+				promoPieces.clear();
+				promoPieces.add(new Rook(currentColor, 9, 2));
+				promoPieces.add(new Knight(currentColor, 9, 3));
+				promoPieces.add(new Bishop(currentColor, 9, 4));
+				promoPieces.add(new Queen(currentColor, 9, 5));
+				return true;
+			}
 		}
 
 		return false;
+	}
+
+	public void promoting() {
+		
 	}
 
 	public void paintComponent( Graphics g){
