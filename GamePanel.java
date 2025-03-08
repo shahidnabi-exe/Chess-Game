@@ -248,11 +248,14 @@ public class GamePanel extends JPanel implements Runnable {
 			    simPieces.remove(activeP.hittingP.getIndex());
 
 			        // Update the active piece's position after capturing
-			        activeP.updatePosition();
+			        // activeP.updatePosition();
 			}
 			
+			if (isKingInCheck()) {
+    			validSquare = false; // Block illegal moves
+			}
 
-			if(isIllegal(activeP) == false) {
+			if(isIllegal(activeP) == false && oponentCanCaptureKing() == false) {
 				validSquare = true;
 			}
 			
@@ -271,6 +274,21 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		return false;
 	}
+
+
+	private boolean oponentCanCaptureKing() {
+
+		Piece king = getKing(false);
+
+		for(Piece p : simPieces) {
+			if(p.color != king.color && p.canMove(king.col, king.row)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 
 	private boolean isKingInCheck() {
 
@@ -298,7 +316,7 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 			}
 			else {
-				if(p.type == Type.KING && p.color != currentColor) {
+				if(p.type == Type.KING && p.color == currentColor) {
 					king = p;
 				}
 			}
@@ -373,7 +391,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if(activeP != null) {
 			if(canMove) 
 			{
-				if(isIllegal(activeP))	{
+				if(isIllegal(activeP) || oponentCanCaptureKing() )	{
 					g2.setColor(Color.gray);
 					g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
 					g2.fillRect(activeP.col * Board.SQUARE_SIZE, activeP.row * Board.SQUARE_SIZE, Board.SQUARE_SIZE, Board.SQUARE_SIZE);
