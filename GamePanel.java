@@ -192,15 +192,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 						} 
 
-						// else {
-
-						// 	if(canPromote() ) {
-						// 		promotion = true;
-						// 	} else  {
-						// 		changePlayer();
-						// 	}	
-						// }
-
 						if(canPromote()) {
 
 							promotion = true;
@@ -289,6 +280,22 @@ public class GamePanel extends JPanel implements Runnable {
 		return false;
 	}
 
+	private boolean isCheckMate(){
+
+		return false;
+	}
+
+	private boolean KingCanMove(Piece king){
+		//Simulate if there is any square where the king can move to 
+		
+
+		return false;
+	}
+
+	private boolean isValidMove(Piece king, int colPlus, int rowPlus){
+
+		return false;
+	}
 
 	private boolean isKingInCheck() {
 
