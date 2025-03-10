@@ -282,19 +282,74 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private boolean isCheckMate(){
 
-		return false;
+		Piece king = getKing(true);
+
+		if(KingCanMove(king)) {
+			return false;
+		}
+		else {
+			// but you still have chance!!
+			// check if can block the attack with your piece
+
+			// check the position of the checking piece and the king in check
+			int colDiff = Math.abs(checkingP.col - king.col);
+			int rowDiff = Math.abs(checkingP.row - king.row);
+
+
+			if(colDiff == 0) {
+				// the checking piece is attacking verticallly 
+			}
+			else if(rowDiff == 0) {
+				// the checking piece is attacking horizontally
+			}
+			else if(colDiff == rowDiff) {
+				// the checking piece is attacking diagonally
+			}
+			else {
+				
+			}
+
+		}
+
+		return true;
 	}
 
 	private boolean KingCanMove(Piece king){
 		//Simulate if there is any square where the king can move to 
-		
+		if(isValidMove(king, -1, -1)) { return true;}
+		if(isValidMove(king, 0, -1)) { return true;}
+		if(isValidMove(king, 1, -1)) { return true;}
+		if(isValidMove(king, -1, 0)) { return true;}
+		if(isValidMove(king, 1, 0)) { return true;}
+		if(isValidMove(king, -1, 1)) { return true;}
+		if(isValidMove(king, 0, 1)) { return true;}
+		if(isValidMove(king, 1, 1)) { return true;}
 
 		return false;
 	}
 
 	private boolean isValidMove(Piece king, int colPlus, int rowPlus){
+		
+		boolean isValidMove = false;
 
-		return false;
+		//update the king's position for a second
+		king.col += colPlus;
+		king.row += rowPlus;
+
+		if(king.canMove(king.col, king.row)) {
+
+			if(king.hittingP != null) {
+				simPieces.remove(king.hittingP.getIndex());
+			}
+			if(isIllegal(king) == false) {
+				isValidMove = true;
+			}
+		}
+		//Reset the king's position and restore the removed piece
+		king.resetPosition();
+		copyPieces(pieces, simPieces);
+
+		return isValidMove;
 	}
 
 	private boolean isKingInCheck() {
