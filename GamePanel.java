@@ -298,15 +298,64 @@ public class GamePanel extends JPanel implements Runnable {
 
 			if(colDiff == 0) {
 				// the checking piece is attacking verticallly 
+				
+				if (checkingP.row < king.row) {
+					//the checking piece is above the king
+				
+					for(int row = checkingP.row; row < king.row; row++) {
+						for(Piece p : simPieces) {
+							if(p != king && p.color != currentColor && p.canMove(checkingP.col, row){
+								return false;
+							}
+						}
+					}
+				}
+				
+				if(checkingP.row > king.row ){
+					// the checking piece is below the king 
+				
+					for(int row = checkingP.row; row > king.row; row--) {
+						for(Piece p : simPieces) {
+							if(p != king && p.color != currentColor && p.canMove(checkingP.col, row){
+								return false;
+							}
+						}
+					}
+				}
 			}
 			else if(rowDiff == 0) {
 				// the checking piece is attacking horizontally
+
+				if(checkingP.col < king.col) {
+					// the checking piece is to the left 
+
+					for(int col = checkingP.col; col < king.col; col++) {
+						for(Piece p : simPieces) {
+							if(p != king && p.color != currentColor && p.canMove(col, checkingP.row){
+								return false;
+							}
+						}
+					}
+				}
+
+				if(checkingP.col > king.col) {
+					// the checking piece is to the right
+
+					for(int col = checkingP.col; col > king.col; col--) {
+						for(Piece p : simPieces) {
+							if(p != king && p.color != currentColor && p.canMove(col, checkingP.row){
+								return false;
+							}
+						}
+					}
+				}
 			}
 			else if(colDiff == rowDiff) {
 				// the checking piece is attacking diagonally
 			}
 			else {
-				
+				// the checking piece is knight
+
 			}
 
 		}
