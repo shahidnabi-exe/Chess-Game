@@ -151,7 +151,7 @@ public class GamePanel extends JPanel implements Runnable {
 			promoting();
 			
 		}
-		else{
+		else if(gameOver == false){
 			/// Mouse Pressed ///
 			if(m.pressed) {
 				if(activeP == null) {
@@ -186,19 +186,17 @@ public class GamePanel extends JPanel implements Runnable {
 						copyPieces(simPieces, pieces);
 						activeP.updatePosition();
 
-						if(isKingInCheck()) {
+						if(isKingInCheck() && isCheckMate()) {
 							// TODO :	gameOver
-
-
+							gameOver = true;
 						} 
-
-						if(canPromote()) {
-
-							promotion = true;
-						} else  {
-							changePlayer();
-						}	
-						
+						else { // The game is still continue 
+							if(canPromote()) {
+								promotion = true;
+							} else  {
+								changePlayer();
+							}
+						}												
 
 					}
 					else {
@@ -304,7 +302,7 @@ public class GamePanel extends JPanel implements Runnable {
 				
 					for(int row = checkingP.row; row < king.row; row++) {
 						for(Piece p : simPieces) {
-							if(p != king && p.color != currentColor && p.canMove(checkingP.col, row){
+							if(p != king && p.color != currentColor && p.canMove(checkingP.col, row)){
 								return false;
 							}
 						}
@@ -316,7 +314,7 @@ public class GamePanel extends JPanel implements Runnable {
 				
 					for(int row = checkingP.row; row > king.row; row--) {
 						for(Piece p : simPieces) {
-							if(p != king && p.color != currentColor && p.canMove(checkingP.col, row){
+							if(p != king && p.color != currentColor && p.canMove(checkingP.col, row)){
 								return false;
 							}
 						}
@@ -331,7 +329,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 					for(int col = checkingP.col; col < king.col; col++) {
 						for(Piece p : simPieces) {
-							if(p != king && p.color != currentColor && p.canMove(col, checkingP.row){
+							if(p != king && p.color != currentColor && p.canMove(col, checkingP.row)){
 								return false;
 							}
 						}
@@ -343,7 +341,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 					for(int col = checkingP.col; col > king.col; col--) {
 						for(Piece p : simPieces) {
-							if(p != king && p.color != currentColor && p.canMove(col, checkingP.row){
+							if(p != king && p.color != currentColor && p.canMove(col, checkingP.row)){
 								return false;
 							}
 						}
@@ -352,6 +350,60 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			else if(colDiff == rowDiff) {
 				// the checking piece is attacking diagonally
+				
+				if(checkingP.row < king.row) {
+					// the checking piece is above the king 
+
+					if(checkingP.col < king.col) {
+						// the checking piece in upper left
+
+						for(int col = checkingP.col, row = checkingP.row; col < king.col; col++, row++) {
+							for(Piece p : simPieces) {
+								if(p != king && p.color != currentColor && p.canMove(col, row)) {
+									return false;
+								}
+							}
+						}
+					}
+					if (checkingP.col > king.col) {
+						// the checking piece is upper right
+
+						for(int col = checkingP.col, row = checkingP.row; col > king.col; col--, row++) {
+							for(Piece p : simPieces) {
+								if(p != king && p.color != currentColor && p.canMove(col, row)) {
+									return false;
+								}
+							}
+						}
+					}
+				}
+
+				if(checkingP.row > king.row) {
+					// the checking piece is below the king 
+
+					if(checkingP.col < king.col) {
+						// the checking piece in lower left
+						for(int col = checkingP.col, row = checkingP.row; col < king.col; col++, row--) {
+							for(Piece p : simPieces) {
+								if(p != king && p.color != currentColor && p.canMove(col, row)) {
+									return false;
+								}
+							}
+						}
+
+					}
+					if (checkingP.col > king.col) {
+						// the checking piece is lower right
+
+						for(int col = checkingP.col, row = checkingP.row; col > king.col; col--, row--) {
+							for(Piece p : simPieces) {
+								if(p != king && p.color != currentColor && p.canMove(col, row)) {
+									return false;
+								}
+							}
+						}
+					}
+				}
 			}
 			else {
 				// the checking piece is knight
@@ -551,5 +603,17 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 		
+		if (gameOver) {
+			String s = " ";
+			if(currentColor == WHITE) {
+				s = " WHITE WINS !!";
+			}
+			else {
+				s = " BLACK WINS !!";
+			}
+			g2.setFont(new Font("Arial", Font.PLAIN, 90));
+			g2.setColor(Color.green);
+			g2.drawString(s, 200, 420);
+		}
 	}
 }
