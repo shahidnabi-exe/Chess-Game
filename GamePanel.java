@@ -35,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 	boolean validSquare;
 	boolean promotion;
 	boolean gameOver;
+	boolean stalemate;
 	
 
 	public GamePanel() {
@@ -190,6 +191,9 @@ public class GamePanel extends JPanel implements Runnable {
 							// TODO :	gameOver
 							gameOver = true;
 						} 
+						else if (isStalemate() && 	isKingInCheck() == false) {
+							stalemate = true;
+						}
 						else { // The game is still continue 
 							if(canPromote()) {
 								promotion = true;
@@ -250,6 +254,25 @@ public class GamePanel extends JPanel implements Runnable {
 			
 		}	
 
+	}
+
+	private boolean isStalemate(){
+
+		int count = 0;
+		// count the no of pieces of opponent
+		for(Piece p : simPieces) {
+			if(p.color != currentColor){
+				count++;
+			}
+		}
+
+		if(count == 1) {
+			if(KingCanMove(getKing(true)) == false) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean isIllegal(Piece King) {
