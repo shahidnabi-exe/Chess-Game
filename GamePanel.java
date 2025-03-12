@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable {
 			promoting();
 			
 		}
-		else if(gameOver == false){
+		else if(gameOver == false && stalemate == false){
 			/// Mouse Pressed ///
 			if(m.pressed) {
 				if(activeP == null) {
@@ -637,6 +637,11 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.setFont(new Font("Arial", Font.PLAIN, 90));
 			g2.setColor(Color.green);
 			g2.drawString(s, 200, 420);
+		}
+		if (isStalemate()) {
+			g2.setFont(new Font("Arial", Font.PLAIN, 90));
+			g2.setColor(Color.lightGray);
+			g2.drawString("Stalemate ", 200, 420);
 		}
 	}
 }
