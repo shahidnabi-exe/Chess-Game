@@ -8,7 +8,6 @@ import java.awt.AlphaComposite;
 import java.awt.Font;
 import java.awt.RenderingHints;
 
-
 public class GamePanel extends JPanel implements Runnable {
 
 	public static final int WIDTH = 900;
