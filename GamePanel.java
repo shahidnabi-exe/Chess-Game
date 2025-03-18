@@ -427,10 +427,10 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 			}
-			else {
-				// the checking piece is knight
+			// else {
+			// 	// the checking piece is knight
 
-			}
+			// }
 
 		}
 
