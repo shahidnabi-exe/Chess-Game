@@ -1,5 +1,4 @@
 
-
 public class King extends Piece {
 		
 	public King (int color, int col, int row) {
@@ -27,16 +26,7 @@ public class King extends Piece {
 				}				
 			}
 
-			// CASTLING 
-			if(moved == false) {
-
-				//Right Castling
-				
-					
-
-				// Left Castling
-			}
-
+			
 		}
 		return false;
 	}
